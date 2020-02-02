@@ -1,11 +1,17 @@
 package com.accp.mapper;
 
-import com.accp.domain.Repair;
-import com.accp.domain.RepairExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import com.accp.domain.Repair;
+import com.accp.domain.RepairExample;
+import com.accp.domain.Working;
+
 public interface RepairMapper {
+	
+	List<Working> queryWorkingCar(String carNumber,String phone,String clname,String column);
+	
     int countByExample(RepairExample example);
 
     int deleteByExample(RepairExample example);

@@ -21,6 +21,35 @@
     <result column="faultreasult" property="faultreasult" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="queryWorkingCarResultMap" type="com.accp.domain.Working" >
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="clname" property="clname" jdbcType="VARCHAR" />
+    <result column="carNumber" property="carNumber" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="genre" property="genre" jdbcType="VARCHAR" />
+    <result column="orderTime" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="overworkdate" property="overworkdate" jdbcType="TIMESTAMP" />
+    <result column="nowworkDate" property="nowworkDate" jdbcType="TIMESTAMP" />
+    <result column="stockDater" property="stockDater" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="getman" property="getman" jdbcType="VARCHAR" />
+    <result column="price" property="price"/>
+  </resultMap>
+  
+  <select id="queryWorkingCar" resultMap="queryWorkingCarResultMap">
+	SELECT * FROM(
+	SELECT rep.`status`,rep.`type`,cl.`name` clname,car.`carNumber`,cl.`phone`,rep.`number`,'维修' genre,rep.`orderTime`,rep.`overworkdate`,rep.`nowworkDate`,rep.`stockDater`,rep.`price`,sta.`name`,rep.`getman`
+		FROM `repair` rep,carinfo car,`client` cl,staff sta
+			WHERE rep.`carinfoId`=car.`id` AND car.`id`=cl.`carNo` AND rep.`staffId`=sta.`staffNo` AND car.`carNumber` LIKE '%${carNumber}%' AND cl.`phone` LIKE '%${phone}%' AND cl.`name` LIKE '%${clname}%'
+	UNION
+	SELECT res.`status`,res.`type`,cl.`name` clname,car.`carNumber`,cl.`phone`,res.`number`,'救援',res.`orderTime`,'2000-01-01',res.`overtime`,res.`stockDater`,res.`price`,sta.`name`,res.`getman`
+		FROM `rescue` res,carinfo car,`client` cl,staff sta
+			WHERE res.`carinfoId`=car.`id` AND car.`id`=cl.`carNo` AND res.`staffId`=sta.`staffNo` AND car.`carNumber` LIKE '%${carNumber}%' AND cl.`phone` LIKE '%${phone}%' AND cl.`name` LIKE '%${clname}%' ) AS working
+			ORDER BY working.ordertime ${column}
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
