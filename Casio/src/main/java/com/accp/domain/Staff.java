@@ -71,10 +71,6 @@ public class Staff {
 
     private Date agreementends;
 
-    private String cardnumber;
-
-    private String internalcardno;
-
     private String referrer;
 
     private String wholeorderdiscountright;
@@ -371,22 +367,6 @@ public class Staff {
 
     public void setAgreementends(Date agreementends) {
         this.agreementends = agreementends;
-    }
-
-    public String getCardnumber() {
-        return cardnumber;
-    }
-
-    public void setCardnumber(String cardnumber) {
-        this.cardnumber = cardnumber;
-    }
-
-    public String getInternalcardno() {
-        return internalcardno;
-    }
-
-    public void setInternalcardno(String internalcardno) {
-        this.internalcardno = internalcardno;
     }
 
     public String getReferrer() {

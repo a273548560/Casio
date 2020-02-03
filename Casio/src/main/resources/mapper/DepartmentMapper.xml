@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.accp.domain.Department" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="departmentName" property="departmentname" jdbcType="VARCHAR" />
-    <result column="departmentTypeName" property="departmenttypename" jdbcType="VARCHAR" />
     <result column="parentId" property="parentid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -66,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, departmentName, departmentTypeName, parentId
+    id, departmentName, parentId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.DepartmentExample" >
     select
@@ -99,10 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.accp.domain.Department" >
-    insert into department (id, departmentName, departmentTypeName, 
-      parentId)
-    values (#{id,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{departmenttypename,jdbcType=VARCHAR}, 
-      #{parentid,jdbcType=INTEGER})
+    insert into department (id, departmentName, parentId
+      )
+    values (#{id,jdbcType=INTEGER}, #{departmentname,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.accp.domain.Department" >
     insert into department
@@ -112,9 +111,6 @@
       </if>
       <if test="departmentname != null" >
         departmentName,
-      </if>
-      <if test="departmenttypename != null" >
-        departmentTypeName,
       </if>
       <if test="parentid != null" >
         parentId,
@@ -126,9 +122,6 @@
       </if>
       <if test="departmentname != null" >
         #{departmentname,jdbcType=VARCHAR},
-      </if>
-      <if test="departmenttypename != null" >
-        #{departmenttypename,jdbcType=VARCHAR},
       </if>
       <if test="parentid != null" >
         #{parentid,jdbcType=INTEGER},
@@ -150,9 +143,6 @@
       <if test="record.departmentname != null" >
         departmentName = #{record.departmentname,jdbcType=VARCHAR},
       </if>
-      <if test="record.departmenttypename != null" >
-        departmentTypeName = #{record.departmenttypename,jdbcType=VARCHAR},
-      </if>
       <if test="record.parentid != null" >
         parentId = #{record.parentid,jdbcType=INTEGER},
       </if>
@@ -165,7 +155,6 @@
     update department
     set id = #{record.id,jdbcType=INTEGER},
       departmentName = #{record.departmentname,jdbcType=VARCHAR},
-      departmentTypeName = #{record.departmenttypename,jdbcType=VARCHAR},
       parentId = #{record.parentid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,9 +166,6 @@
       <if test="departmentname != null" >
         departmentName = #{departmentname,jdbcType=VARCHAR},
       </if>
-      <if test="departmenttypename != null" >
-        departmentTypeName = #{departmenttypename,jdbcType=VARCHAR},
-      </if>
       <if test="parentid != null" >
         parentId = #{parentid,jdbcType=INTEGER},
       </if>
@@ -189,7 +175,6 @@
   <update id="updateByPrimaryKey" parameterType="com.accp.domain.Department" >
     update department
     set departmentName = #{departmentname,jdbcType=VARCHAR},
-      departmentTypeName = #{departmenttypename,jdbcType=VARCHAR},
       parentId = #{parentid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

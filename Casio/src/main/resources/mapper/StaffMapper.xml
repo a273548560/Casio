@@ -36,8 +36,6 @@
     <result column="birthdayDate" property="birthdaydate" jdbcType="DATE" />
     <result column="contractStart" property="contractstart" jdbcType="DATE" />
     <result column="agreementEnds" property="agreementends" jdbcType="DATE" />
-    <result column="cardNumber" property="cardnumber" jdbcType="VARCHAR" />
-    <result column="internalCardNo" property="internalcardno" jdbcType="VARCHAR" />
     <result column="referrer" property="referrer" jdbcType="VARCHAR" />
     <result column="wholeOrderDiscountRight" property="wholeorderdiscountright" jdbcType="VARCHAR" />
     <result column="timeDiscountRight" property="timediscountright" jdbcType="VARCHAR" />
@@ -115,10 +113,9 @@
     nativePlace, nation, maritalStatus, educationBackground, school, major, professionalQualification, 
     property, degree, authorizedStrength, idCardNo, residence, presentAddress, contactNumber, 
     phone, email, depositBank, bankAccount, emergencyContact, emergencyPhone, dateOnBoard, 
-    theTrialDue, birthdayDate, contractStart, agreementEnds, cardNumber, internalCardNo, 
-    referrer, wholeOrderDiscountRight, timeDiscountRight, rightToDiscount, rightOfRelief, 
-    jobResume, educationexperience, memberOfFamily, disciplinaryRecords, employmentAdvice, 
-    picture, roleId, isDimission
+    theTrialDue, birthdayDate, contractStart, agreementEnds, referrer, wholeOrderDiscountRight, 
+    timeDiscountRight, rightToDiscount, rightOfRelief, jobResume, educationexperience, 
+    memberOfFamily, disciplinaryRecords, employmentAdvice, picture, roleId, isDimission
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.StaffExample" >
     select
@@ -162,12 +159,12 @@
       email, depositBank, bankAccount, 
       emergencyContact, emergencyPhone, dateOnBoard, 
       theTrialDue, birthdayDate, contractStart, 
-      agreementEnds, cardNumber, internalCardNo, 
-      referrer, wholeOrderDiscountRight, timeDiscountRight, 
-      rightToDiscount, rightOfRelief, jobResume, 
-      educationexperience, memberOfFamily, disciplinaryRecords, 
-      employmentAdvice, picture, roleId, 
-      isDimission)
+      agreementEnds, referrer, wholeOrderDiscountRight, 
+      timeDiscountRight, rightToDiscount, rightOfRelief, 
+      jobResume, educationexperience, memberOfFamily, 
+      disciplinaryRecords, employmentAdvice, 
+      picture, roleId, isDimission
+      )
     values (#{staffno,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{departmentid,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{postid,jdbcType=INTEGER}, #{physicalcondition,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, 
@@ -179,12 +176,12 @@
       #{email,jdbcType=VARCHAR}, #{depositbank,jdbcType=VARCHAR}, #{bankaccount,jdbcType=VARCHAR}, 
       #{emergencycontact,jdbcType=VARCHAR}, #{emergencyphone,jdbcType=VARCHAR}, #{dateonboard,jdbcType=DATE}, 
       #{thetrialdue,jdbcType=DATE}, #{birthdaydate,jdbcType=DATE}, #{contractstart,jdbcType=DATE}, 
-      #{agreementends,jdbcType=DATE}, #{cardnumber,jdbcType=VARCHAR}, #{internalcardno,jdbcType=VARCHAR}, 
-      #{referrer,jdbcType=VARCHAR}, #{wholeorderdiscountright,jdbcType=VARCHAR}, #{timediscountright,jdbcType=VARCHAR}, 
-      #{righttodiscount,jdbcType=VARCHAR}, #{rightofrelief,jdbcType=VARCHAR}, #{jobresume,jdbcType=VARCHAR}, 
-      #{educationexperience,jdbcType=VARCHAR}, #{memberoffamily,jdbcType=VARCHAR}, #{disciplinaryrecords,jdbcType=VARCHAR}, 
-      #{employmentadvice,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, 
-      #{isdimission,jdbcType=INTEGER})
+      #{agreementends,jdbcType=DATE}, #{referrer,jdbcType=VARCHAR}, #{wholeorderdiscountright,jdbcType=VARCHAR}, 
+      #{timediscountright,jdbcType=VARCHAR}, #{righttodiscount,jdbcType=VARCHAR}, #{rightofrelief,jdbcType=VARCHAR}, 
+      #{jobresume,jdbcType=VARCHAR}, #{educationexperience,jdbcType=VARCHAR}, #{memberoffamily,jdbcType=VARCHAR}, 
+      #{disciplinaryrecords,jdbcType=VARCHAR}, #{employmentadvice,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, #{isdimission,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.accp.domain.Staff" >
     insert into staff
@@ -290,12 +287,6 @@
       </if>
       <if test="agreementends != null" >
         agreementEnds,
-      </if>
-      <if test="cardnumber != null" >
-        cardNumber,
-      </if>
-      <if test="internalcardno != null" >
-        internalCardNo,
       </if>
       <if test="referrer != null" >
         referrer,
@@ -439,12 +430,6 @@
       </if>
       <if test="agreementends != null" >
         #{agreementends,jdbcType=DATE},
-      </if>
-      <if test="cardnumber != null" >
-        #{cardnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="internalcardno != null" >
-        #{internalcardno,jdbcType=VARCHAR},
       </if>
       <if test="referrer != null" >
         #{referrer,jdbcType=VARCHAR},
@@ -598,12 +583,6 @@
       <if test="record.agreementends != null" >
         agreementEnds = #{record.agreementends,jdbcType=DATE},
       </if>
-      <if test="record.cardnumber != null" >
-        cardNumber = #{record.cardnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="record.internalcardno != null" >
-        internalCardNo = #{record.internalcardno,jdbcType=VARCHAR},
-      </if>
       <if test="record.referrer != null" >
         referrer = #{record.referrer,jdbcType=VARCHAR},
       </if>
@@ -684,8 +663,6 @@
       birthdayDate = #{record.birthdaydate,jdbcType=DATE},
       contractStart = #{record.contractstart,jdbcType=DATE},
       agreementEnds = #{record.agreementends,jdbcType=DATE},
-      cardNumber = #{record.cardnumber,jdbcType=VARCHAR},
-      internalCardNo = #{record.internalcardno,jdbcType=VARCHAR},
       referrer = #{record.referrer,jdbcType=VARCHAR},
       wholeOrderDiscountRight = #{record.wholeorderdiscountright,jdbcType=VARCHAR},
       timeDiscountRight = #{record.timediscountright,jdbcType=VARCHAR},
@@ -805,12 +782,6 @@
       <if test="agreementends != null" >
         agreementEnds = #{agreementends,jdbcType=DATE},
       </if>
-      <if test="cardnumber != null" >
-        cardNumber = #{cardnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="internalcardno != null" >
-        internalCardNo = #{internalcardno,jdbcType=VARCHAR},
-      </if>
       <if test="referrer != null" >
         referrer = #{referrer,jdbcType=VARCHAR},
       </if>
@@ -888,8 +859,6 @@
       birthdayDate = #{birthdaydate,jdbcType=DATE},
       contractStart = #{contractstart,jdbcType=DATE},
       agreementEnds = #{agreementends,jdbcType=DATE},
-      cardNumber = #{cardnumber,jdbcType=VARCHAR},
-      internalCardNo = #{internalcardno,jdbcType=VARCHAR},
       referrer = #{referrer,jdbcType=VARCHAR},
       wholeOrderDiscountRight = #{wholeorderdiscountright,jdbcType=VARCHAR},
       timeDiscountRight = #{timediscountright,jdbcType=VARCHAR},

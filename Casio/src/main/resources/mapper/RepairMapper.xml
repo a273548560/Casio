@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.accp.domain.Repair" >
     <id column="number" property="number" jdbcType="VARCHAR" />
     <result column="carinfoId" property="carinfoid" jdbcType="INTEGER" />
-    <result column="counselorId" property="counselorid" jdbcType="INTEGER" />
+    <result column="staffId" property="staffid" jdbcType="VARCHAR" />
     <result column="oil" property="oil" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="worktime" property="worktime" jdbcType="VARCHAR" />
@@ -20,6 +20,8 @@
     <result column="fault" property="fault" jdbcType="VARCHAR" />
     <result column="faultreasult" property="faultreasult" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="orderTime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="stockDater" property="stockdater" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="queryWorkingCarResultMap" type="com.accp.domain.Working" >
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -37,7 +39,6 @@
     <result column="getman" property="getman" jdbcType="VARCHAR" />
     <result column="price" property="price"/>
   </resultMap>
-  
   <select id="queryWorkingCar" resultMap="queryWorkingCarResultMap">
 	SELECT * FROM(
 	SELECT rep.`status`,rep.`type`,cl.`name` clname,car.`carNumber`,cl.`phone`,rep.`number`,'维修' genre,rep.`orderTime`,rep.`overworkdate`,rep.`nowworkDate`,rep.`stockDater`,rep.`price`,sta.`name`,rep.`getman`
@@ -49,7 +50,6 @@
 			WHERE res.`carinfoId`=car.`id` AND car.`id`=cl.`carNo` AND res.`staffId`=sta.`staffNo` AND car.`carNumber` LIKE '%${carNumber}%' AND cl.`phone` LIKE '%${phone}%' AND cl.`name` LIKE '%${clname}%' ) AS working
 			ORDER BY working.ordertime ${column}
   </select>
-  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -109,8 +109,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    number, carinfoId, counselorId, oil, type, worktime, getman, overworkdate, nowworkDate, 
-    setter, company, befor, price, remark, state, fault, faultreasult, status
+    number, carinfoId, staffId, oil, type, worktime, getman, overworkdate, nowworkDate, 
+    setter, company, befor, price, remark, state, fault, faultreasult, status, orderTime, 
+    stockDater
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.RepairExample" >
     select
@@ -143,20 +144,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.accp.domain.Repair" >
-    insert into repair (number, carinfoId, counselorId, 
+    insert into repair (number, carinfoId, staffId, 
       oil, type, worktime, 
       getman, overworkdate, nowworkDate, 
       setter, company, befor, 
       price, remark, state, 
-      fault, faultreasult, status
-      )
-    values (#{number,jdbcType=VARCHAR}, #{carinfoid,jdbcType=INTEGER}, #{counselorid,jdbcType=INTEGER}, 
+      fault, faultreasult, status, 
+      orderTime, stockDater)
+    values (#{number,jdbcType=VARCHAR}, #{carinfoid,jdbcType=INTEGER}, #{staffid,jdbcType=VARCHAR}, 
       #{oil,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{worktime,jdbcType=VARCHAR}, 
       #{getman,jdbcType=VARCHAR}, #{overworkdate,jdbcType=TIMESTAMP}, #{nowworkdate,jdbcType=TIMESTAMP}, 
       #{setter,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{befor,jdbcType=TIMESTAMP}, 
       #{price,jdbcType=REAL}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
-      #{fault,jdbcType=VARCHAR}, #{faultreasult,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
-      )
+      #{fault,jdbcType=VARCHAR}, #{faultreasult,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{ordertime,jdbcType=TIMESTAMP}, #{stockdater,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.accp.domain.Repair" >
     insert into repair
@@ -167,8 +168,8 @@
       <if test="carinfoid != null" >
         carinfoId,
       </if>
-      <if test="counselorid != null" >
-        counselorId,
+      <if test="staffid != null" >
+        staffId,
       </if>
       <if test="oil != null" >
         oil,
@@ -215,6 +216,12 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="ordertime != null" >
+        orderTime,
+      </if>
+      <if test="stockdater != null" >
+        stockDater,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="number != null" >
@@ -223,8 +230,8 @@
       <if test="carinfoid != null" >
         #{carinfoid,jdbcType=INTEGER},
       </if>
-      <if test="counselorid != null" >
-        #{counselorid,jdbcType=INTEGER},
+      <if test="staffid != null" >
+        #{staffid,jdbcType=VARCHAR},
       </if>
       <if test="oil != null" >
         #{oil,jdbcType=VARCHAR},
@@ -271,6 +278,12 @@
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stockdater != null" >
+        #{stockdater,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.accp.domain.RepairExample" resultType="java.lang.Integer" >
@@ -288,8 +301,8 @@
       <if test="record.carinfoid != null" >
         carinfoId = #{record.carinfoid,jdbcType=INTEGER},
       </if>
-      <if test="record.counselorid != null" >
-        counselorId = #{record.counselorid,jdbcType=INTEGER},
+      <if test="record.staffid != null" >
+        staffId = #{record.staffid,jdbcType=VARCHAR},
       </if>
       <if test="record.oil != null" >
         oil = #{record.oil,jdbcType=VARCHAR},
@@ -336,6 +349,12 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=VARCHAR},
       </if>
+      <if test="record.ordertime != null" >
+        orderTime = #{record.ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stockdater != null" >
+        stockDater = #{record.stockdater,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -345,7 +364,7 @@
     update repair
     set number = #{record.number,jdbcType=VARCHAR},
       carinfoId = #{record.carinfoid,jdbcType=INTEGER},
-      counselorId = #{record.counselorid,jdbcType=INTEGER},
+      staffId = #{record.staffid,jdbcType=VARCHAR},
       oil = #{record.oil,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       worktime = #{record.worktime,jdbcType=VARCHAR},
@@ -360,7 +379,9 @@
       state = #{record.state,jdbcType=VARCHAR},
       fault = #{record.fault,jdbcType=VARCHAR},
       faultreasult = #{record.faultreasult,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=VARCHAR}
+      status = #{record.status,jdbcType=VARCHAR},
+      orderTime = #{record.ordertime,jdbcType=TIMESTAMP},
+      stockDater = #{record.stockdater,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -371,8 +392,8 @@
       <if test="carinfoid != null" >
         carinfoId = #{carinfoid,jdbcType=INTEGER},
       </if>
-      <if test="counselorid != null" >
-        counselorId = #{counselorid,jdbcType=INTEGER},
+      <if test="staffid != null" >
+        staffId = #{staffid,jdbcType=VARCHAR},
       </if>
       <if test="oil != null" >
         oil = #{oil,jdbcType=VARCHAR},
@@ -419,13 +440,19 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="ordertime != null" >
+        orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stockdater != null" >
+        stockDater = #{stockdater,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where number = #{number,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.accp.domain.Repair" >
     update repair
     set carinfoId = #{carinfoid,jdbcType=INTEGER},
-      counselorId = #{counselorid,jdbcType=INTEGER},
+      staffId = #{staffid,jdbcType=VARCHAR},
       oil = #{oil,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       worktime = #{worktime,jdbcType=VARCHAR},
@@ -440,7 +467,9 @@
       state = #{state,jdbcType=VARCHAR},
       fault = #{fault,jdbcType=VARCHAR},
       faultreasult = #{faultreasult,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR}
+      status = #{status,jdbcType=VARCHAR},
+      orderTime = #{ordertime,jdbcType=TIMESTAMP},
+      stockDater = #{stockdater,jdbcType=TIMESTAMP}
     where number = #{number,jdbcType=VARCHAR}
   </update>
 </mapper>

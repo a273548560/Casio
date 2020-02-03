@@ -7,7 +7,7 @@ public class Repair {
 
     private Integer carinfoid;
 
-    private Integer counselorid;
+    private String staffid;
 
     private String oil;
 
@@ -39,6 +39,10 @@ public class Repair {
 
     private String status;
 
+    private Date ordertime;
+
+    private Date stockdater;
+
     public String getNumber() {
         return number;
     }
@@ -55,12 +59,12 @@ public class Repair {
         this.carinfoid = carinfoid;
     }
 
-    public Integer getCounselorid() {
-        return counselorid;
+    public String getStaffid() {
+        return staffid;
     }
 
-    public void setCounselorid(Integer counselorid) {
-        this.counselorid = counselorid;
+    public void setStaffid(String staffid) {
+        this.staffid = staffid;
     }
 
     public String getOil() {
@@ -181,5 +185,21 @@ public class Repair {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getOrdertime() {
+        return ordertime;
+    }
+
+    public void setOrdertime(Date ordertime) {
+        this.ordertime = ordertime;
+    }
+
+    public Date getStockdater() {
+        return stockdater;
+    }
+
+    public void setStockdater(Date stockdater) {
+        this.stockdater = stockdater;
     }
 }
