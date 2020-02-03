@@ -5,8 +5,6 @@ public class Department {
 
     private String departmentname;
 
-    private String departmenttypename;
-
     private Integer parentid;
 
     public Integer getId() {
@@ -23,14 +21,6 @@ public class Department {
 
     public void setDepartmentname(String departmentname) {
         this.departmentname = departmentname;
-    }
-
-    public String getDepartmenttypename() {
-        return departmenttypename;
-    }
-
-    public void setDepartmenttypename(String departmenttypename) {
-        this.departmenttypename = departmenttypename;
     }
 
     public Integer getParentid() {
